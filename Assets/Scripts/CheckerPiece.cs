@@ -7,12 +7,16 @@ public class CheckerPiece : MonoBehaviour
     public GameObject controller;
     public GameObject movePlate;
 
+    
+
     //positions
     private int xBoard = -1;
     private int yBoard = -1;
 
     //Black or White player
     private string player;
+
+    private bool hasJumped = false;
 
     //Refrences for all sprite
     public Sprite singleBlack, singleWhite, doubleBlack, doubleWhite;
@@ -25,10 +29,10 @@ public class CheckerPiece : MonoBehaviour
 
         switch (this.name)
         {
-            case "singleBlack": this.GetComponent<SpriteRenderer>().sprite = singleBlack; break;
-            case "singleWhite": this.GetComponent<SpriteRenderer>().sprite = singleWhite; break;
-            case "doubleBlack": this.GetComponent<SpriteRenderer>().sprite = doubleBlack; break;
-            case "doubleWhite": this.GetComponent<SpriteRenderer>().sprite = doubleWhite; break;
+            case "singleBlack": this.GetComponent<SpriteRenderer>().sprite = singleBlack; player = "Black"; break;
+            case "singleWhite": this.GetComponent<SpriteRenderer>().sprite = singleWhite; player = "White"; break;
+            case "doubleBlack": this.GetComponent<SpriteRenderer>().sprite = doubleBlack; player = "Black"; break;
+            case "doubleWhite": this.GetComponent<SpriteRenderer>().sprite = doubleWhite; player = "White"; break;
         }
     }
 
@@ -56,13 +60,259 @@ public class CheckerPiece : MonoBehaviour
         return yBoard;
     }
 
-    public void setXboard(int x)
+    public void SetXboard(int x)
     {
         xBoard = x;
     }
 
-    public void setYboard(int y)
+    public void SetYboard(int y)
     {
         yBoard = y;
+    }
+
+    private void OnMouseUp()
+    {
+        DestroyMovePlates();
+        Game sc = controller.GetComponent<Game>();
+        if (sc.GetPlayer() == player)
+        {
+            InitiateMovePlates();
+        }
+    }
+
+    public void DestroyMovePlates()
+    {
+        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
+
+        for(int i = 0; i < movePlates.Length; i++)
+        {
+            Destroy(movePlates[i]);
+        }
+    }
+
+    public void InitiateMovePlates()
+    {
+        if (CanMoveDownLeft())
+        {
+            MovePlateSpawn(xBoard - 1, yBoard + 1);
+        }
+
+        if (CanMoveDownRight())
+        {
+            MovePlateSpawn(xBoard + 1, yBoard + 1);
+
+        }
+
+        if (CanMoveUpLeft())
+        {
+            MovePlateSpawn(xBoard - 1, yBoard - 1);
+        }
+
+        if (CanMoveUpRight())
+        {
+            MovePlateSpawn(xBoard + 1, yBoard - 1);
+        }
+
+        if (CanJumpDownLeft())
+        {
+            AttackPlateSpawn(xBoard - 2, yBoard + 2);
+        }
+
+        if (CanJumpDownRight())
+        {
+            AttackPlateSpawn(xBoard + 2, yBoard + 2);
+        }
+
+        if (CanJumpUpLeft())
+        {
+            AttackPlateSpawn(xBoard - 2, yBoard - 2);
+        }
+
+        if (CanJumpUpRight())
+        {
+            AttackPlateSpawn(xBoard + 2, yBoard - 2);
+        }
+    }
+
+    public void MovePlateSpawn(int matrixX, int matrixY)
+    {
+        float x = matrixX;
+        float y = matrixY;
+
+        x *= 0.66f;
+        y *= 0.66f;
+
+        x += -2.3f;
+        y += -2.3f;
+
+        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
+
+        MovePlate mpScript = mp.GetComponent<MovePlate>();
+        mpScript.SetRefrence(this.gameObject);
+        mpScript.SetCoords(matrixX, matrixY);
+    }
+
+    public void AttackPlateSpawn(int matrixX, int matrixY)
+    {
+        float x = matrixX;
+        float y = matrixY;
+
+        x *= 0.66f;
+        y *= 0.66f;
+
+        x += -2.3f;
+        y += -2.3f;
+
+        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
+
+        MovePlate mpScript = mp.GetComponent<MovePlate>();
+        mpScript.attack = true;
+        mpScript.SetRefrence(gameObject);
+        mpScript.SetCoords(matrixX, matrixY);
+    }
+    
+    public bool hasJump()
+    {
+        if (CanJumpDownLeft()|| CanJumpDownRight() || CanJumpUpLeft() || CanJumpUpRight())
+            return true;
+        return false;
+    }
+    private bool CanMoveDownLeft()
+    {
+        Game sc = controller.GetComponent<Game>();
+
+        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        {
+            if (sc.PosistionOnBoard(xBoard - 1, yBoard + 1) && sc.GetPosistion(xBoard - 1, yBoard + 1) == null)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool CanMoveDownRight()
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        {
+            if (sc.PosistionOnBoard(xBoard + 1, yBoard + 1) && sc.GetPosistion(xBoard + 1, yBoard + 1) == null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool CanMoveUpLeft()
+    {
+        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        {
+            Game sc = controller.GetComponent<Game>();
+
+            if (sc.PosistionOnBoard(xBoard - 1, yBoard - 1) && sc.GetPosistion(xBoard - 1, yBoard - 1) == null)
+            {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    private bool CanMoveUpRight()
+    {
+        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        {
+            Game sc = controller.GetComponent<Game>();
+
+            if (sc.PosistionOnBoard(xBoard + 1, yBoard - 1) && sc.GetPosistion(xBoard + 1, yBoard - 1) == null)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    private bool CanJumpDownLeft()
+    {
+        Game sc = controller.GetComponent<Game>();
+
+        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        {
+            if (sc.PosistionOnBoard(xBoard - 1, yBoard + 1)
+                        && sc.GetPosistion(xBoard - 1, yBoard + 1) != null
+                        && sc.GetPosistion(xBoard - 1, yBoard + 1).GetComponent<CheckerPiece>().player != player)
+            {
+                if (sc.PosistionOnBoard(xBoard - 2, yBoard + 2) && sc.GetPosistion(xBoard - 2, yBoard + 2) == null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private bool CanJumpDownRight()
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        {
+            if (sc.PosistionOnBoard(xBoard + 1, yBoard + 1)
+            && sc.GetPosistion(xBoard + 1, yBoard + 1) != null
+            && sc.GetPosistion(xBoard + 1, yBoard + 1).GetComponent<CheckerPiece>().player != player)
+            {
+                if (sc.PosistionOnBoard(xBoard + 2, yBoard + 2) && sc.GetPosistion(xBoard + 2, yBoard + 2) == null)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool CanJumpUpLeft()
+    {
+        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        {
+            Game sc = controller.GetComponent<Game>();
+
+            if (sc.PosistionOnBoard(xBoard - 1, yBoard + 1)
+                        && sc.GetPosistion(xBoard - 1, yBoard - 1) != null
+                        && sc.GetPosistion(xBoard - 1, yBoard - 1).GetComponent<CheckerPiece>().player != player)
+            {
+                if (sc.PosistionOnBoard(xBoard - 2, yBoard - 2) && sc.GetPosistion(xBoard - 2, yBoard - 2) == null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private bool CanJumpUpRight()
+    {
+        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        {
+            Game sc = controller.GetComponent<Game>();
+
+            if (sc.PosistionOnBoard(xBoard + 1, yBoard - 1)
+                && sc.GetPosistion(xBoard + 1, yBoard - 1) != null
+                && sc.GetPosistion(xBoard + 1, yBoard - 1).GetComponent<CheckerPiece>().player != player)
+            {
+                if (sc.PosistionOnBoard(xBoard + 2, yBoard - 2) && sc.GetPosistion(xBoard + 2, yBoard - 2) == null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

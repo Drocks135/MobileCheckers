@@ -6,8 +6,10 @@ public class MovePlate : MonoBehaviour
 {
     public GameObject controller;
 
+    //Reference for the object that instaniated the object
     GameObject reference = null;
 
+    //Board Posistions
     int matrixX;
     int matrixY;
 
@@ -29,22 +31,26 @@ public class MovePlate : MonoBehaviour
 
         if (attack)
         {
-            GameObject cp = controller.GetComponent<Game>().GetPosistion(matrixX, matrixY);
+            int enemyX = (matrixX + reference.GetComponent<CheckerPiece>().GetXboard()) / 2;
+            int enemyY = (matrixY + reference.GetComponent<CheckerPiece>().GetYboard()) / 2;
+            GameObject cp = controller.GetComponent<Game>().GetPosistion(enemyX, enemyY);
 
             Destroy(cp);
         }
 
+        //Set the original position to empty
         controller.GetComponent<Game>().SetPosistionEmpty(reference.GetComponent<CheckerPiece>().GetXboard(),
             reference.GetComponent<CheckerPiece>().GetYboard() );
 
-
-        reference.GetComponent<CheckerPiece>().setXboard(matrixX);
-        reference.GetComponent<CheckerPiece>().setXboard(matrixY);
+        //Move the reference ot this position
+        reference.GetComponent<CheckerPiece>().SetXboard(matrixX);
+        reference.GetComponent<CheckerPiece>().SetYboard(matrixY);
         reference.GetComponent<CheckerPiece>().SetCoords();
 
+        //Update the matrix
         controller.GetComponent<Game>().SetPosition(reference);
 
-        //reference.GetComponent<Checkerman>.DestroyMovePlates();
+        reference.GetComponent<CheckerPiece>().DestroyMovePlates();
 
     }
 
@@ -54,7 +60,7 @@ public class MovePlate : MonoBehaviour
         matrixY = y;
     }
 
-    public void setRefrence(GameObject obj)
+    public void SetRefrence(GameObject obj)
     {
         reference = obj;
     }
