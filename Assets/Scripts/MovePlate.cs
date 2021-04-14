@@ -51,7 +51,30 @@ public class MovePlate : MonoBehaviour
         controller.GetComponent<Game>().SetPosition(reference);
 
         reference.GetComponent<CheckerPiece>().DestroyMovePlates();
-
+        bool check1 = reference.GetComponent<CheckerPiece>().hasJump();
+        if (check1 && attack)
+        {
+            reference.GetComponent<CheckerPiece>().DestroyMovePlates();
+            reference.GetComponent<CheckerPiece>().InitiateAttackPlates();
+        }
+        else
+        {
+            controller.GetComponent<Game>().NextTurn();
+        }
+        bool checkColor = reference.GetComponent<CheckerPiece>().isBlack();
+        
+        if (checkColor && matrixY == 0)
+        {
+            GameObject cp = controller.GetComponent<Game>().GetPosistion(matrixX, matrixY);
+            Destroy(cp);
+            controller.GetComponent<Game>().Create("doubleBlack", matrixX, matrixY);
+        }
+        else if (checkColor == false && matrixY == 7)
+        {
+            GameObject cp = controller.GetComponent<Game>().GetPosistion(matrixX, matrixY);
+            Destroy(cp);
+            controller.GetComponent<Game>().Create("doubleWhite", matrixX, matrixY);
+        }
     }
 
     public void SetCoords(int x, int y)
