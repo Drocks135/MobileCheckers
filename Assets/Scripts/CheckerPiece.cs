@@ -36,6 +36,20 @@ public class CheckerPiece : MonoBehaviour
         }
     }
 
+    public bool isBlack()
+    {
+        if (player == "Black")
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void makeDouble()
+    {
+
+    }
+
     public void SetCoords()
     {
         float x = xBoard;
@@ -134,6 +148,30 @@ public class CheckerPiece : MonoBehaviour
         }
     }
 
+    public void InitiateAttackPlates()
+    {
+        if (CanJumpDownLeft())
+        {
+            AttackPlateSpawn(xBoard - 2, yBoard + 2);
+        }
+
+        if (CanJumpDownRight())
+        {
+            AttackPlateSpawn(xBoard + 2, yBoard + 2);
+        }
+
+        if (CanJumpUpLeft())
+        {
+            AttackPlateSpawn(xBoard - 2, yBoard - 2);
+        }
+
+        if (CanJumpUpRight())
+        {
+            AttackPlateSpawn(xBoard + 2, yBoard - 2);
+        }
+    }
+
+
     public void MovePlateSpawn(int matrixX, int matrixY)
     {
         float x = matrixX;
@@ -177,11 +215,12 @@ public class CheckerPiece : MonoBehaviour
             return true;
         return false;
     }
+
     private bool CanMoveDownLeft()
     {
         Game sc = controller.GetComponent<Game>();
 
-        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        if (this.name == "singleWhite" || this.name == "doubleBlack" || this.name == "doubleWhite")
         {
             if (sc.PosistionOnBoard(xBoard - 1, yBoard + 1) && sc.GetPosistion(xBoard - 1, yBoard + 1) == null)
             {
@@ -195,7 +234,7 @@ public class CheckerPiece : MonoBehaviour
     private bool CanMoveDownRight()
     {
         Game sc = controller.GetComponent<Game>();
-        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        if (this.name == "singleWhite" || this.name == "doubleBlack" || this.name == "doubleWhite")
         {
             if (sc.PosistionOnBoard(xBoard + 1, yBoard + 1) && sc.GetPosistion(xBoard + 1, yBoard + 1) == null)
             {
@@ -207,7 +246,7 @@ public class CheckerPiece : MonoBehaviour
 
     private bool CanMoveUpLeft()
     {
-        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        if (this.name == "singleBlack" || this.name == "doubleWhite" || this.name == "doubleBlack")
         {
             Game sc = controller.GetComponent<Game>();
 
@@ -223,7 +262,7 @@ public class CheckerPiece : MonoBehaviour
 
     private bool CanMoveUpRight()
     {
-        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        if (this.name == "singleBlack" || this.name == "doubleWhite" || this.name == "doubleBlack")
         {
             Game sc = controller.GetComponent<Game>();
 
@@ -242,8 +281,10 @@ public class CheckerPiece : MonoBehaviour
     {
         Game sc = controller.GetComponent<Game>();
 
-        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        if (this.name == "singleWhite" || this.name == "doubleBlack" || this.name == "doubleWhite")
         {
+            if (yBoard == 7)
+                return false;
             if (sc.PosistionOnBoard(xBoard - 1, yBoard + 1)
                         && sc.GetPosistion(xBoard - 1, yBoard + 1) != null
                         && sc.GetPosistion(xBoard - 1, yBoard + 1).GetComponent<CheckerPiece>().player != player)
@@ -261,8 +302,10 @@ public class CheckerPiece : MonoBehaviour
     private bool CanJumpDownRight()
     {
         Game sc = controller.GetComponent<Game>();
-        if (this.name == "singleWhite" || this.name == "doubleBlack")
+        if (this.name == "singleWhite" || this.name == "doubleBlack" || this.name == "doubleWhite")
         {
+            if (yBoard == 7)
+                return false;
             if (sc.PosistionOnBoard(xBoard + 1, yBoard + 1)
             && sc.GetPosistion(xBoard + 1, yBoard + 1) != null
             && sc.GetPosistion(xBoard + 1, yBoard + 1).GetComponent<CheckerPiece>().player != player)
@@ -278,11 +321,12 @@ public class CheckerPiece : MonoBehaviour
 
     private bool CanJumpUpLeft()
     {
-        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        if (this.name == "singleBlack" || this.name == "doubleWhite" || this.name == "doubleBlack")
         {
             Game sc = controller.GetComponent<Game>();
-
-            if (sc.PosistionOnBoard(xBoard - 1, yBoard + 1)
+            if (yBoard == 0)
+                return false;
+            if (sc.PosistionOnBoard(xBoard - 1, yBoard - 1)
                         && sc.GetPosistion(xBoard - 1, yBoard - 1) != null
                         && sc.GetPosistion(xBoard - 1, yBoard - 1).GetComponent<CheckerPiece>().player != player)
             {
@@ -298,10 +342,11 @@ public class CheckerPiece : MonoBehaviour
 
     private bool CanJumpUpRight()
     {
-        if (this.name == "singleBlack" || this.name == "doubleWhite")
+        if (this.name == "singleBlack" || this.name == "doubleWhite" || this.name == "doubleBlack")
         {
             Game sc = controller.GetComponent<Game>();
-
+            if (yBoard == 0)
+                return false;
             if (sc.PosistionOnBoard(xBoard + 1, yBoard - 1)
                 && sc.GetPosistion(xBoard + 1, yBoard - 1) != null
                 && sc.GetPosistion(xBoard + 1, yBoard - 1).GetComponent<CheckerPiece>().player != player)
