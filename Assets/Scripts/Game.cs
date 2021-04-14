@@ -94,7 +94,7 @@ public class Game : MonoBehaviour
 
     public void NextTurn()
     {
-        if (currentPlayer == "Black")
+        if (currentPlayer.Equals("Black"))
         {
             currentPlayer = "White";
             hasJump = playerHasJump();
