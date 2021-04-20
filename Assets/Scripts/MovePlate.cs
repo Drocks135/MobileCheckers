@@ -34,7 +34,14 @@ public class MovePlate : MonoBehaviour
             int enemyX = (matrixX + reference.GetComponent<CheckerPiece>().GetXboard()) / 2;
             int enemyY = (matrixY + reference.GetComponent<CheckerPiece>().GetYboard()) / 2;
             GameObject cp = controller.GetComponent<Game>().GetPosistion(enemyX, enemyY);
-
+            controller.GetComponent<Game>().SetPosistionEmpty(enemyX,
+            enemyY);
+            bool check = reference.GetComponent<CheckerPiece>().isBlack();
+            if (check) {
+                controller.GetComponent<Game>().setPieceNull(enemyX, enemyY, "White");
+            } else {
+                controller.GetComponent<Game>().setPieceNull(enemyX, enemyY, "Black");
+            }
             Destroy(cp);
         }
 
@@ -42,16 +49,30 @@ public class MovePlate : MonoBehaviour
         controller.GetComponent<Game>().SetPosistionEmpty(reference.GetComponent<CheckerPiece>().GetXboard(),
             reference.GetComponent<CheckerPiece>().GetYboard() );
 
-        //Move the reference ot this position
+        //Move the reference to this position
         reference.GetComponent<CheckerPiece>().SetXboard(matrixX);
         reference.GetComponent<CheckerPiece>().SetYboard(matrixY);
         reference.GetComponent<CheckerPiece>().SetCoords();
+
+        bool checkColor = reference.GetComponent<CheckerPiece>().isBlack();
+
+        if (checkColor && matrixY == 0)
+        {
+            reference.GetComponent<CheckerPiece>().setName("doubleBlack");
+            reference.GetComponent<CheckerPiece>().Activate();
+        }
+        else if (checkColor == false && matrixY == 7)
+        {
+            reference.GetComponent<CheckerPiece>().setName("doubleWhite");
+            reference.GetComponent<CheckerPiece>().Activate();
+        }
 
         //Update the matrix
         controller.GetComponent<Game>().SetPosition(reference);
 
         reference.GetComponent<CheckerPiece>().DestroyMovePlates();
-
+        
+        controller.GetComponent<Game>().NextTurn(reference, attack);
     }
 
     public void SetCoords(int x, int y)
