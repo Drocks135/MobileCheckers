@@ -114,10 +114,28 @@ public class Game : MonoBehaviour
                     }
                 } else {
                     currentPlayer = "White";
+                    bool canJump = false;
                     for (int i = 0; i < 12; i++){
-                        if (playerWhite[i] != null){
+                        if (playerWhite[i] != null) {
                             CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(false);
+                            if(temp.hasJump()){
+                                canJump = true;
+                                for (int j = 0; j < 12; j++){
+                                    if (playerWhite[j] != null) {
+                                        CheckerPiece temp2 = playerWhite[j].GetComponent<CheckerPiece>();
+                                        temp2.setForced(true);
+                                    }
+                                }
+                            break;
+                            }
+                        }
+                    }
+                    if (canJump == false){
+                        for (int i = 0; i < 12; i++){
+                            if (playerWhite[i] != null) {
+                                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                                temp.setForced(false);
+                            }
                         }
                     }
                 }
@@ -136,10 +154,28 @@ public class Game : MonoBehaviour
                     }
                 } else {
                     currentPlayer = "Black";
+                    bool canJump = false;
                     for (int i = 0; i < 12; i++){
                         if (playerBlack[i] != null) {
                             CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(false);
+                            if(temp.hasJump()){
+                                canJump = true;
+                                for (int j = 0; j < 12; j++){
+                                    if (playerBlack[j] != null) {
+                                        CheckerPiece temp2 = playerBlack[j].GetComponent<CheckerPiece>();
+                                        temp2.setForced(true);
+                                    }
+                                }
+                            break;
+                            }
+                        }
+                    }
+                    if (canJump == false){
+                        for (int i = 0; i < 12; i++){
+                            if (playerBlack[i] != null) {
+                                CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
+                                temp.setForced(false);
+                            }
                         }
                     }
                 }
