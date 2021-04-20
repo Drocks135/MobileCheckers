@@ -8,6 +8,7 @@ public class CheckerPiece : MonoBehaviour
     public GameObject movePlate;
 
     
+    private bool isForced = false;
 
     //positions
     private int xBoard = -1;
@@ -36,6 +37,13 @@ public class CheckerPiece : MonoBehaviour
         }
     }
 
+    public void setName(string newName) {
+        this.name = newName;
+    }
+
+    public void setForced(bool boolean){
+        isForced = boolean;
+    }
     public bool isBlack()
     {
         if (player == "Black")
@@ -86,11 +94,15 @@ public class CheckerPiece : MonoBehaviour
 
     private void OnMouseUp()
     {
-        DestroyMovePlates();
-        Game sc = controller.GetComponent<Game>();
-        if (sc.GetPlayer() == player)
-        {
-            InitiateMovePlates();
+        if (isForced == true){
+
+        } else {
+            DestroyMovePlates();
+            Game sc = controller.GetComponent<Game>();
+            if (sc.GetPlayer() == player)
+            {
+                InitiateMovePlates();
+            }
         }
     }
 
@@ -358,6 +370,34 @@ public class CheckerPiece : MonoBehaviour
             }
         }
 
+        return false;
+    }
+
+    public bool CanMove(){
+        if(CanJumpDownLeft()){
+            return true;
+        }
+        if(CanJumpDownRight()){
+            return true;
+        }
+        if(CanJumpUpLeft()){
+            return true;
+        }
+        if(CanJumpUpRight()){
+            return true;
+        }
+        if(CanMoveDownLeft()){
+            return true;
+        }
+        if(CanMoveDownRight()){
+            return true;
+        }
+        if(CanMoveUpLeft()){
+            return true;
+        }
+        if(CanMoveUpRight()){
+            return true;
+        }
         return false;
     }
 }
