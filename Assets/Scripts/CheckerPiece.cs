@@ -95,7 +95,12 @@ public class CheckerPiece : MonoBehaviour
     private void OnMouseUp()
     {
         if (isForced == true){
-
+            DestroyMovePlates();
+            Game sc = controller.GetComponent<Game>();
+            if (sc.GetPlayer() == player)
+            {
+                InitiateAttackPlates();
+            }
         } else {
             DestroyMovePlates();
             Game sc = controller.GetComponent<Game>();
