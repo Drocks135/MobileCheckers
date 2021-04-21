@@ -54,7 +54,6 @@ public class MovePlate : MonoBehaviour
         reference.GetComponent<CheckerPiece>().SetYboard(matrixY);
         reference.GetComponent<CheckerPiece>().SetCoords();
 
-        //king logic
         bool checkColor = reference.GetComponent<CheckerPiece>().isBlack();
 
         if (checkColor && matrixY == 0)
