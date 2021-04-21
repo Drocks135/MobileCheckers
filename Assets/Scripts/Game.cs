@@ -92,58 +92,17 @@ public class Game : MonoBehaviour
         return true;
     }
 
-    public void NextTurn(GameObject obj, bool wasLastJump)
+    public void NextTurn()
     {
-        if (checkIfBlackWins() && currentPlayer.Equals("Black")){
-            print("Congratulations, black team wins!");
-        } else if (checkIfWhiteWins() && currentPlayer.Equals("White")) {
-            print("Congratulations, white team wins!");
-        } else {
-            CheckerPiece cm = obj.GetComponent<CheckerPiece>();
-            if (currentPlayer.Equals("Black"))
-            {
-                hasJump = playerHasJump(obj);
-                if (hasJump == true && wasLastJump == true) {
-                    currentPlayer = "Black";
-                    cm.InitiateAttackPlates();
-                    for (int i = 0; i < 12; i++){
-                        if (playerBlack[i] != null) {
-                            CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
-                        }
-                    }
-                } else {
-                    currentPlayer = "White";
-                    for (int i = 0; i < 12; i++){
-                        if (playerWhite[i] != null){
-                            CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(false);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                hasJump = playerHasJump(obj);
-                if (hasJump == true && wasLastJump == true) {
-                    currentPlayer = "White";
-                    cm.InitiateAttackPlates();
-                    for (int i = 0; i < 12; i++){
-                        if (playerWhite[i] != null) {
-                            CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
-                        }
-                    }
-                } else {
-                    currentPlayer = "Black";
-                    for (int i = 0; i < 12; i++){
-                        if (playerBlack[i] != null) {
-                            CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(false);
-                        }
-                    }
-                }
-            }
+        if (currentPlayer == "Black")
+        {
+            currentPlayer = "White";
+            hasJump = playerHasJump();
+        }
+        else
+        {
+            currentPlayer = "Black";
+            hasJump = playerHasJump();
         }
     }
 
@@ -152,63 +111,22 @@ public class Game : MonoBehaviour
         return currentPlayer;
     }
 
-    private bool playerHasJump(GameObject obj)
+    private bool playerHasJump()
     {
-        CheckerPiece cm = obj.GetComponent<CheckerPiece>();
-        return cm.hasJump();
+        if(currentPlayer == "Black")
+        {
+            for(int i = 0; i < playerBlack.Length; i++)
+            {
+                if (playerBlack[i].GetComponent<CheckerPiece>().hasJump())
+                    return true;
+            }
+        }
+        return false;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    public bool checkIfBlackWins(){
-        for (int i = 0; i < 12; i++){
-            if (playerWhite[i] != null) {
-                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                if (temp.CanMove()){
-                    
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public void setPieceNull(int x, int y, string color) {
-        if (color.Equals("Black")) {
-            for (int i = 0; i < 12; i++){
-                if (playerBlack[i] != null) {
-                    CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                    if (temp.GetXboard() == x && temp.GetYboard() == y){
-                        playerBlack[i] = null;
-                    }
-                }
-            }
-        } else {
-            for (int i = 0; i < 12; i++){
-                if (playerWhite[i] != null) {
-                    CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                    if (temp.GetXboard() == x && temp.GetYboard() == y){
-                        playerWhite[i] = null;
-                    }
-                }
-            }
-        }
-    }
-
-    public bool checkIfWhiteWins(){
-        for (int i = 0; i < 12; i++){
-            if (playerBlack[i] != null) {
-                CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                if (temp.CanMove()){
-                    
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }
