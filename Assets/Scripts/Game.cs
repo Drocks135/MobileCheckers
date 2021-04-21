@@ -112,11 +112,21 @@ public class Game : MonoBehaviour
                             temp.setForced(true);
                         }
                     }
+                    for (int i = 0; i < 12; i++){
+                        if (playerWhite[i] != null) {
+                            CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                            temp.setForced(true);
+                        }
+                    }
                 } else {
                     currentPlayer = "White";
                     for (int i = 0; i < 12; i++){
                         if (playerWhite[i] != null){
                             CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                            temp.setForced(false);
+                        }
+                        if (playerBlack[i] != null){
+                            CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
                             temp.setForced(false);
                         }
                     }
@@ -134,11 +144,23 @@ public class Game : MonoBehaviour
                             temp.setForced(true);
                         }
                     }
+                    for (int i = 0; i < 12; i++){
+                        if (playerBlack[i] != null) {
+                            CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
+                            temp.setForced(true);
+                        }
+                    }
                 } else {
                     currentPlayer = "Black";
                     for (int i = 0; i < 12; i++){
                         if (playerBlack[i] != null) {
                             CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
+                            temp.setForced(false);
+                        }
+                    }
+                    for (int i = 0; i < 12; i++){
+                        if (playerWhite[i] != null) {
+                            CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
                             temp.setForced(false);
                         }
                     }
