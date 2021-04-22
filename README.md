@@ -10,6 +10,8 @@
   With the projects tab open on the left side of Unity, we're going to want to click the blue new button in the top right of the screen. For templates, we're going to want to download the Mobile 2D template provided. For the project name, feel free to call it what you like and create a path that you will be able to find the project in the future.
 ### Step-By-Step Coding
 
+For coding the scripts to make the game function, we'll use C#.
+
 ### Further Discussions/Conclusions
   This was our tutorial on how to utilize Unity and how our group utilized it to create a Checkers project. Unity is becoming an increasingly popular development tool for creating games, so this was a great experience on our part to see what goes into coding Unity games. We recommend that you all take a look into Unity if you are interested and have the free time. One tool that is useful for Android development specifically is in the Unity Package Manager called "Device Simulator". This allows you to get a look at your game from the perspective of users on different sized phones. Here's an excellent tutorial on its uses and how to install it: https://www.youtube.com/watch?v=uokF9CmUs9c .
   We really enjoyed creating this project, and we hope you found this tutorial helpful. Hopefully it sparked some interest from you all to test out Unity!
