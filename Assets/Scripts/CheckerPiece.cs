@@ -7,6 +7,9 @@ public class CheckerPiece : MonoBehaviour
     public GameObject controller;
     public GameObject movePlate;
 
+    //setting up fade functionality
+    private bool fadeOut = true, fade = false;
+    private float fadeSpeed = 0.8f;
     
     private bool isForced = false;
 
@@ -37,12 +40,46 @@ public class CheckerPiece : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if(fade){
+            if(fadeOut){
+                Color objectColor = this.GetComponent<Renderer>().material.color;
+                float fadeAmount = objectColor.a - (fadeSpeed * Time.deltaTime);
+                objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+                this.GetComponent<Renderer>().material.color = objectColor;
+                if(objectColor.a <= 0){
+                    fadeOut = false;
+                }
+            }else{
+                Color objectColor = this.GetComponent<Renderer>().material.color;
+                float fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);
+                objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+                this.GetComponent<Renderer>().material.color = objectColor;
+                if(objectColor.a >= 1){
+                    fadeOut = true;
+                }
+            }
+        }else{
+            Color objectColor = this.GetComponent<Renderer>().material.color;
+            float fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);
+            if(objectColor.a < 1){
+                objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+                this.GetComponent<Renderer>().material.color = objectColor;
+            }
+        }
+    }
+
     public void setName(string newName) {
         this.name = newName;
     }
 
-    public void setForced(bool boolean){
+    public void setForced(bool boolean, bool turn){
         isForced = boolean;
+        if(this.hasJump() && boolean && turn)
+            fade = true;
+        else
+            fade = false;
     }
     public bool isBlack()
     {
@@ -228,8 +265,9 @@ public class CheckerPiece : MonoBehaviour
     
     public bool hasJump()
     {
-        if (CanJumpDownLeft()|| CanJumpDownRight() || CanJumpUpLeft() || CanJumpUpRight())
+        if (CanJumpDownLeft()|| CanJumpDownRight() || CanJumpUpLeft() || CanJumpUpRight()){
             return true;
+        }
         return false;
     }
 
