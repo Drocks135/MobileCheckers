@@ -109,13 +109,13 @@ public class Game : MonoBehaviour
                     for (int i = 0; i < 12; i++){
                         if (playerBlack[i] != null) {
                             CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
+                            temp.setForced(true, true);
                         }
                     }
                     for (int i = 0; i < 12; i++){
                         if (playerWhite[i] != null) {
                             CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
+                            temp.setForced(true, false);
                         }
                     }
                 } else {
@@ -129,7 +129,11 @@ public class Game : MonoBehaviour
                                 for (int j = 0; j < 12; j++){
                                     if (playerWhite[j] != null) {
                                         CheckerPiece temp2 = playerWhite[j].GetComponent<CheckerPiece>();
-                                        temp2.setForced(true);
+                                        temp2.setForced(true, true);
+                                    }
+                                    if (playerBlack[j] != null) {
+                                        CheckerPiece temp2 = playerBlack[j].GetComponent<CheckerPiece>();
+                                        temp2.setForced(true, false);
                                     }
                                 }
                             break;
@@ -140,12 +144,12 @@ public class Game : MonoBehaviour
                         for (int i = 0; i < 12; i++){
                             if (playerWhite[i] != null) {
                                 CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                                temp.setForced(false);
+                                temp.setForced(false, true);
                             }
-                        }
-                        if (playerBlack[i] != null){
-                            CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(false);
+                            if (playerBlack[i] != null){
+                                CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
+                                temp.setForced(false, false);
+                            }
                         }
                     }
                 }
@@ -159,13 +163,11 @@ public class Game : MonoBehaviour
                     for (int i = 0; i < 12; i++){
                         if (playerWhite[i] != null) {
                             CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
+                            temp.setForced(true, true);
                         }
-                    }
-                    for (int i = 0; i < 12; i++){
                         if (playerBlack[i] != null) {
                             CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
+                            temp.setForced(true, false);
                         }
                     }
                 } else {
@@ -179,7 +181,11 @@ public class Game : MonoBehaviour
                                 for (int j = 0; j < 12; j++){
                                     if (playerBlack[j] != null) {
                                         CheckerPiece temp2 = playerBlack[j].GetComponent<CheckerPiece>();
-                                        temp2.setForced(true);
+                                        temp2.setForced(true, true);
+                                    }
+                                    if (playerWhite[j] != null) {
+                                        CheckerPiece temp2 = playerWhite[j].GetComponent<CheckerPiece>();
+                                        temp2.setForced(true, false);
                                     }
                                 }
                             break;
@@ -190,14 +196,12 @@ public class Game : MonoBehaviour
                         for (int i = 0; i < 12; i++){
                             if (playerBlack[i] != null) {
                                 CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                                temp.setForced(false);
+                                temp.setForced(false, true);
                             }
-                        }
-                    }
-                    for (int i = 0; i < 12; i++){
-                        if (playerWhite[i] != null) {
-                            CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(false);
+                            if (playerWhite[i] != null) {
+                                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                                temp.setForced(false, false);
+                            }
                         }
                     }
                 }
