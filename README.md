@@ -28,7 +28,7 @@ Now that we have our main camera all set up and ready to go, we will need to pla
 
 ![](/images/Import.png) 
 
-From here, we will choose the checkerboard file already downloaded. You should now see the file appear in the bottom of the screen. We'll create a folder to store these sprites in called "Sprites" within the Assets folder. In order to get the image to appear on screen, click and drag your sprite from the bottom box to the hierarchy box where the Scene and the Main Camera exist, and place it in there. You can either utilize the move tool at the top of the screen or the transform tool under inspector to change the position of the sprite and center it in the camera.
+From here, we will choose the checkerboard file already downloaded. You should now see the file appear in the bottom of the screen. We'll create a folder to store these sprites and we will call it "Sprites" within the Assets folder. In order to get the image to appear on screen, click and drag your sprite from the bottom box to the hierarchy box where the Scene and the Main Camera exist, and place it in there. You can either utilize the move tool at the top of the screen or the transform tool under inspector to change the position of the sprite and center it in the camera.
 
 ![](/images/transform.JPG) 
 
