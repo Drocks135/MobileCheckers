@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -95,9 +97,9 @@ public class Game : MonoBehaviour
     public void NextTurn(GameObject obj, bool wasLastJump)
     {
         if (checkIfBlackWins() && currentPlayer.Equals("Black")){
-            print("Congratulations, black team wins!");
+            Winner(currentPlayer);
         } else if (checkIfWhiteWins() && currentPlayer.Equals("White")) {
-            print("Congratulations, white team wins!");
+            Winner(currentPlayer);
         } else {
             CheckerPiece cm = obj.GetComponent<CheckerPiece>();
             if (currentPlayer.Equals("Black"))
@@ -223,20 +225,21 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GameObject.FindGameObjectWithTag("TopText").GetComponent<Text>().text = currentPlayer + "'s turn";
+        if(gameOver == true && Input.GetMouseButtonDown(0))
+        {
+            gameOver = false;
+
+            SceneManager.LoadScene("Checkers");
+        }
     }
 
-    public bool checkIfBlackWins(){
-        for (int i = 0; i < 12; i++){
-            if (playerWhite[i] != null) {
-                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                if (temp.CanMove()){
-                    
-                    return false;
-                }
-            }
-        }
-        return true;
+    public void Winner(string PlayerWinner)
+    {
+        gameOver = true;
+
+        GameObject.FindGameObjectWithTag("BottomText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("TopText").GetComponent<Text>().text = PlayerWinner + " Wins!";
     }
 
     public void setPieceNull(int x, int y, string color) {
@@ -259,6 +262,23 @@ public class Game : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool checkIfBlackWins()
+    {
+        for (int i = 0; i < 12; i++)
+        {
+            if (playerWhite[i] != null)
+            {
+                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                if (temp.CanMove())
+                {
+
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public bool checkIfWhiteWins(){
