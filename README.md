@@ -22,7 +22,7 @@ This main camera, by default, will not be the portrait size of an Android device
 
 ### Creating Sprites to Place in the Main Camera
 
-Now that we have our main camera all set up and ready to go.
+Now that we have our main camera all set up and ready to go, we will need to place sprites within this main camera. For this project, we'll need to import
 
 ### Creating a Game Controller
 
