@@ -28,6 +28,10 @@ Now that we have our main camera all set up and ready to go, we will need to pla
 
 ![](/images/Import.png) 
 
+From here, we will choose the checkerboard file already downloaded. Once the file is selected, there should be a new folder in your assets folder labeled "Sprites", and inside of that folder should be the checker board selected. You can either utilize the move tool at the top of the screen or the transform tool under inspector to change the position of the sprite and center it in the camera.
+
+![](/images/transform.jpg) 
+
 ### Creating a Game Controller
 
 For coding the scripts to make the game function, we'll use C#. We're going to need to create a Controller to handle the events of the game. To do this, right click under the hierarchy and select Create Empty. This will create a new GameObject, which serve several different purposes in Unity. For this GameObject, we're going to go on the inspector on the right side, and hit the dropdown menu which says "Tag" and click on the GameController option. This will indicate that this class is designated to be the main controller for the game. 
