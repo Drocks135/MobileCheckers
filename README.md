@@ -40,7 +40,7 @@ With the controller still inspected, look furthest down the available options un
 
 ### Coding the Game Controller
 
-To access your Game Controller script, there should now be a folder on the bottom box labeled as "Scripts". Inside of there should be a C# file containing the filename that you wanted for that script. We're going to utilize this script for some practical coding and understanding about Unity. When you first open up the C# file, there should be already two methods created for you: Start() and Update(). Start() is the code that will be played at the start of the game and can be used to create initial objects, such as our initial checker pieces. Let's take a look at the start of our Checkers program: 
+To access your Game Controller script, there should now be a folder on the bottom box labeled as "Scripts". Inside of there should be a C# file containing the filename that you wanted for that script. We're going to utilize this script for some practical coding and understanding about Unity. When you first open up the C# file, there should be already two methods created for you: Start() and Update(). Start() is the code that will be played at the start of the game and can be used to create initial objects, such as our initial checker pieces. Update() will be checked every frame that the program is running and allows us to make decisions on the fly. Let's take a look at the start of our Checkers program: 
 
 ```
     public GameObject Checker;
@@ -98,6 +98,50 @@ To access your Game Controller script, there should now be a folder on the botto
 Take note of the first line where we call public GameObject Checker. If we go back to our UI and double click on the controller in the hierarchy on the left side, we now see under our original game script is a Checker GameObject. Now, we're going to need to import our checker piece images into the sprite folder through the similar method we used above. For this checker piece, we're going to want to also create a script. Have the checker piece sprite selected, head to the bottom of the right menu and click the Add Component like before. Click on the option that says Scripts and this time we're going to want to create a Checkers_Piece script. This will control the actions of the checker pieces specifically.
 
 ![](/images/script.png)
+
+Double click the controller on the left side again, and look back at the Checkers GameOption. To fill this field, you're going to want to select the Checker_Piece option that you just created. Now, you'll be able to create checker objects that have their own scripts, but are controlled by an even larger game controller.
+
+### Object instatiation
+
+As you can also see above, we utilized a method called Create(). This was an additional method we created in our main Game Controller class to help make these checker pieces be unique and viewable to the user.
+
+```
+public GameObject Create(string name, int x, int y)
+    {
+        //Create a checker piece object
+        GameObject obj = Instantiate(Checker, new Vector3(0, 0, -1), Quaternion.identity);
+        CheckerPiece cm = obj.GetComponent<CheckerPiece>();
+
+        //Set the attributes of the piece
+        cm.name = name;
+        cm.SetXboard(x);
+        cm.SetYboard(y);
+        cm.Activate();
+
+        return obj;
+    }
+```
+
+This create method allows for a new Checker GameObject to be instatiated every time it's called, and attributes are then passed on to the newly created checker object. One great thing is that checker pieces can also communicate back to the Game object. In our checker piece class, we can create a controller GameObject that will allow the Checkers_piece class to call GameController methods. This can be done through the following code:
+
+
+```
+public GameObject controller;
+Game sc = controller.GetComponent<GameController>();
+```
+
+### Reacting to Mouse Clicks
+
+Let's talk about user input, specifically from mouse clicks. In a checkers game, mouse clicks happen quite frequently since they are necessary to move checker pieces from place to place. In order to get a piece to react to a mouse click, we're going to want to utilize the following method
+
+```
+private void OnMouseUp()
+    {
+      # Your code here.
+    }
+```
+
+The OnMouseUp method is needed to react to whenever the user happens to click on that specific object while in the game. From here, coders should place whatever they want inside this method so they can react to these mouse clicks as they see fit.
 
 ## Further Discussions/Conclusions
   This was our tutorial on how to utilize Unity and how our group utilized it to create a Checkers project. Unity is becoming an increasingly popular development tool for creating games, so this was a great experience on our part to see what goes into coding Unity games. We recommend that you all take a look into Unity if you are interested and have the free time. One tool that is useful for Android development specifically is in the Unity Package Manager called "Device Simulator". This allows you to get a look at your game from the perspective of users on different sized phones. Here's an excellent tutorial on its uses and how to install it: https://www.youtube.com/watch?v=uokF9CmUs9c .
