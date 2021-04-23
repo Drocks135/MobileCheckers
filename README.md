@@ -10,7 +10,10 @@
   With the projects tab open on the left side of Unity, we're going to want to click the blue new button in the top right of the screen. For templates, we're going to want to download the Mobile 2D template provided. For the project name, feel free to call it what you like and create a path that you will be able to find the project in the future.
 ### Step-By-Step Coding
 
-For coding the scripts to make the game function, we'll use C#. We're going to need to create a Controller to handle the events of the game. To do this, right click under the hierarchy and select Create Empty. This will create a new GameObject
+For coding the scripts to make the game function, we'll use C#. We're going to need to create a Controller to handle the events of the game. To do this, right click under the hierarchy and select Create Empty. This will create a new GameObject, which serve several different purposes in Unity. For this GameObject, we're going to go on the inspector on the right side, and hit the dropdown menu which says "Tag" and click on the GameController option. This will indicate that this class is designated to be the main controller for the game. 
+
+With the controller still inspected, look furthest down the available options until you find the "Add Component" button. In here, we're going to want to select the scripts option, then type in the name you want your script to be, and click the option for "New Script" and that should pop up. We'll select our name as "Game", and then click the Create and Add option. You now have a game controller script created!
+
 
 ### Further Discussions/Conclusions
   This was our tutorial on how to utilize Unity and how our group utilized it to create a Checkers project. Unity is becoming an increasingly popular development tool for creating games, so this was a great experience on our part to see what goes into coding Unity games. We recommend that you all take a look into Unity if you are interested and have the free time. One tool that is useful for Android development specifically is in the Unity Package Manager called "Device Simulator". This allows you to get a look at your game from the perspective of users on different sized phones. Here's an excellent tutorial on its uses and how to install it: https://www.youtube.com/watch?v=uokF9CmUs9c .
