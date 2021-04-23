@@ -30,7 +30,7 @@ Now that we have our main camera all set up and ready to go, we will need to pla
 
 From here, we will choose the checkerboard file already downloaded. Once the file is selected, there should be a new folder in your assets folder labeled "Sprites", and inside of that folder should be the checker board selected. You can either utilize the move tool at the top of the screen or the transform tool under inspector to change the position of the sprite and center it in the camera.
 
-![](/images/transform.jpg) 
+![](/images/transform.JPG) 
 
 ### Creating a Game Controller
 
