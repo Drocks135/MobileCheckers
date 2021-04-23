@@ -14,7 +14,11 @@
 
 ### Main Camera
 
-One key feature of Unity is the ability to have a Main Camera. The main camera acts as what the user currently sees in this scenario, and for our project we want it to focus on the checkers board. ![](/images/camera.JPG) This main camera, by default, will not be the portrait size of an Android device. [To change the size of your camera to specific Android standards, Hellium at Unity Answers gives great general advice as to how to change this camera size to fit port sizes for both iOS and Android phones.](https://answers.unity.com/questions/1273713/how-to-set-up-unity-for-portrait-mobile-developmen.html) 
+One key feature of Unity is the ability to have a Main Camera. The main camera acts as what the user currently sees in this scenario, and for our project we want it to focus on the checkers board.
+
+![](/images/camera.JPG) 
+
+This main camera, by default, will not be the portrait size of an Android device.[To change the size of your camera to specific Android standards, Hellium at Unity Answers gives great general advice as to how to change this camera size to fit port sizes for both iOS and Android phones.](https://answers.unity.com/questions/1273713/how-to-set-up-unity-for-portrait-mobile-developmen.html) 
 
 ### Creating Sprites to Place in the Main Camera
 
