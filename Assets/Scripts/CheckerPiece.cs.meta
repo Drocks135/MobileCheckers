@@ -3,7 +3,13 @@ guid: 28e00af1d15dcdb448c9b6c6adacc97a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - controller: {instanceID: 0}
+  - movePlate: {fileID: 6012440961033018324, guid: 68757042515115c459221eef5a82cf55, type: 3}
+  - singleBlack: {fileID: -8143147745810985814, guid: 6b1b0ef10ef31924db47559fe55343b3, type: 3}
+  - singleWhite: {fileID: -1813906250343060676, guid: 6b1b0ef10ef31924db47559fe55343b3, type: 3}
+  - doubleBlack: {instanceID: 0}
+  - doubleWhite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
