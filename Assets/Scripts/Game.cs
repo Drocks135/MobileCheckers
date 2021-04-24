@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -95,9 +97,9 @@ public class Game : MonoBehaviour
     public void NextTurn(GameObject obj, bool wasLastJump)
     {
         if (checkIfBlackWins() && currentPlayer.Equals("Black")){
-            print("Congratulations, black team wins!");
+            Winner(currentPlayer);
         } else if (checkIfWhiteWins() && currentPlayer.Equals("White")) {
-            print("Congratulations, white team wins!");
+            Winner(currentPlayer);
         } else {
             CheckerPiece cm = obj.GetComponent<CheckerPiece>();
             if (currentPlayer.Equals("Black"))
@@ -109,7 +111,13 @@ public class Game : MonoBehaviour
                     for (int i = 0; i < 12; i++){
                         if (playerBlack[i] != null) {
                             CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
+                            temp.setForced(true, true);
+                        }
+                    }
+                    for (int i = 0; i < 12; i++){
+                        if (playerWhite[i] != null) {
+                            CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                            temp.setForced(true, false);
                         }
                     }
                 } else {
@@ -123,7 +131,11 @@ public class Game : MonoBehaviour
                                 for (int j = 0; j < 12; j++){
                                     if (playerWhite[j] != null) {
                                         CheckerPiece temp2 = playerWhite[j].GetComponent<CheckerPiece>();
-                                        temp2.setForced(true);
+                                        temp2.setForced(true, true);
+                                    }
+                                    if (playerBlack[j] != null) {
+                                        CheckerPiece temp2 = playerBlack[j].GetComponent<CheckerPiece>();
+                                        temp2.setForced(true, false);
                                     }
                                 }
                             break;
@@ -134,7 +146,11 @@ public class Game : MonoBehaviour
                         for (int i = 0; i < 12; i++){
                             if (playerWhite[i] != null) {
                                 CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                                temp.setForced(false);
+                                temp.setForced(false, true);
+                            }
+                            if (playerBlack[i] != null){
+                                CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
+                                temp.setForced(false, false);
                             }
                         }
                     }
@@ -149,7 +165,11 @@ public class Game : MonoBehaviour
                     for (int i = 0; i < 12; i++){
                         if (playerWhite[i] != null) {
                             CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                            temp.setForced(true);
+                            temp.setForced(true, true);
+                        }
+                        if (playerBlack[i] != null) {
+                            CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
+                            temp.setForced(true, false);
                         }
                     }
                 } else {
@@ -163,7 +183,11 @@ public class Game : MonoBehaviour
                                 for (int j = 0; j < 12; j++){
                                     if (playerBlack[j] != null) {
                                         CheckerPiece temp2 = playerBlack[j].GetComponent<CheckerPiece>();
-                                        temp2.setForced(true);
+                                        temp2.setForced(true, true);
+                                    }
+                                    if (playerWhite[j] != null) {
+                                        CheckerPiece temp2 = playerWhite[j].GetComponent<CheckerPiece>();
+                                        temp2.setForced(true, false);
                                     }
                                 }
                             break;
@@ -174,7 +198,11 @@ public class Game : MonoBehaviour
                         for (int i = 0; i < 12; i++){
                             if (playerBlack[i] != null) {
                                 CheckerPiece temp = playerBlack[i].GetComponent<CheckerPiece>();
-                                temp.setForced(false);
+                                temp.setForced(false, true);
+                            }
+                            if (playerWhite[i] != null) {
+                                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                                temp.setForced(false, false);
                             }
                         }
                     }
@@ -197,20 +225,21 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GameObject.FindGameObjectWithTag("TopText").GetComponent<Text>().text = currentPlayer + "'s turn";
+        if(gameOver == true && Input.GetMouseButtonDown(0))
+        {
+            gameOver = false;
+
+            SceneManager.LoadScene("Checkers");
+        }
     }
 
-    public bool checkIfBlackWins(){
-        for (int i = 0; i < 12; i++){
-            if (playerWhite[i] != null) {
-                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
-                if (temp.CanMove()){
-                    
-                    return false;
-                }
-            }
-        }
-        return true;
+    public void Winner(string PlayerWinner)
+    {
+        gameOver = true;
+
+        GameObject.FindGameObjectWithTag("BottomText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("TopText").GetComponent<Text>().text = PlayerWinner + " Wins!";
     }
 
     public void setPieceNull(int x, int y, string color) {
@@ -233,6 +262,23 @@ public class Game : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool checkIfBlackWins()
+    {
+        for (int i = 0; i < 12; i++)
+        {
+            if (playerWhite[i] != null)
+            {
+                CheckerPiece temp = playerWhite[i].GetComponent<CheckerPiece>();
+                if (temp.CanMove())
+                {
+
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public bool checkIfWhiteWins(){
